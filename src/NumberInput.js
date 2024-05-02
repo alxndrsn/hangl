@@ -1,9 +1,8 @@
 import { Component } from 'react';
 
-import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
-const Unit = ({ u }) => <InputAdornment position="end">{u}</InputAdornment>;
+import Unit from './Unit';
 
 const validationError = msg => new Error('Validation failed:' + msg);
 
@@ -37,12 +36,13 @@ export default class NumberInput extends Component {
   };
 
   render() {
-    const { disabled, label, unit } = this.props;
+    const { label, unit } = this.props;
     const { value } = this.state;
+
+    console.log('NumberInput.render()', value);
 
     return (
       <TextField
-        disabled={disabled}
         label={label}
         sx={{ m:1, width:'25ch' }}
         InputProps={{

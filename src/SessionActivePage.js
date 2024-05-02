@@ -40,7 +40,7 @@ class SessionActivePage extends Component {
   }
 
   componentDidMount() {
-    if(!this.state.params) this.props.navigate('/settings'); // params failed to load
+    if(!this.state.params) this.props.navigate('/settings/'); // params failed to load
   }
 
   componentWillUnmount() {

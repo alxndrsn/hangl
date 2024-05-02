@@ -27,7 +27,7 @@ class SessionParamsPage extends Component {
 
   saveParams = () => {
     datastore.saveParams(this.state.params);
-    this.props.navigate('/active');
+    this.props.navigate('/active/');
   };
 
   setParam = name => v => {

@@ -35,7 +35,7 @@ jobs:
         node-version: 20
     - run: yarn install --immutable
     - run: yarn lint
-    - run: PUBLIC_URL=https://alxndrsn.github.io/hangl yarn build
+    - run: PUBLIC_URL=/hangl yarn build
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Upload artifact

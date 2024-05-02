@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <CssBaseline/>
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" sx={{p:1}}>
         <RouterProvider router={router}/>
       </Container>
     </>

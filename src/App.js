@@ -9,6 +9,13 @@ import SessionParamsPage from './SessionParamsPage';
 const ErrorPage = () => {
   const error = useRouteError();
 
+  let json;
+  try {
+    json = JSON.stringify(error);
+  } catch(err) {
+    json = '<conversion to JSON failed>';
+  }
+
   return (
     <div>
       <h1>Error</h1>
@@ -18,6 +25,8 @@ const ErrorPage = () => {
       <pre><code>{error?.stack}</code></pre>
       <h2>toString()</h2>
       <pre><code>{error?.toString()}</code></pre>
+      <h2>JSON</h2>
+      <pre><code>{json}</code></pre>
     </div>
   );
 };

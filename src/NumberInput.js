@@ -29,7 +29,7 @@ export default class NumberInput extends Component {
     if(isNaN(numValue)) throw validationError('not a number');
 
     const intValue = Math.floor(numValue);
-    if(intValue != numValue) throw validationError('not an integer');
+    if(intValue !== numValue) throw validationError('not an integer');
 
     if(intValue < 0) throw validationError('less than zero');
 

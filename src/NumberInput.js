@@ -37,11 +37,12 @@ export default class NumberInput extends Component {
   };
 
   render() {
-    const { label, unit } = this.props;
+    const { disabled, label, unit } = this.props;
     const { value } = this.state;
 
     return (
       <TextField
+        disabled={disabled}
         label={label}
         sx={{ m:1, width:'25ch' }}
         InputProps={{

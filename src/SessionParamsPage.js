@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 
 import NumberInput from './NumberInput';
 import SecondsInput from './SecondsInput';
+import datastore from './datastore';
 import withRouter from './withRouter';
 
 const Fieldset = ({ children, label, ...props }) => (
@@ -16,18 +17,24 @@ const Fieldset = ({ children, label, ...props }) => (
 
 const ActionButton = ({ label, ...props }) => <Button variant="contained" {...props}>{label}</Button>;
 
+const defaultParams = {
+  'set.active':    12,
+  'set.rest':      60,
+  'set.reps':       3,
+  'session.rest': 180,
+  'session.sets':   4,
+};
+
 class SessionParamsPage extends Component {
-  state = {
-    params: {
-      'set.active':    12,
-      'set.rest':      60,
-      'set.reps':       3,
-      'session.rest': 180,
-      'session.sets':   4,
-    },
-  };
+  constructor(props) {
+    super(props);
+
+    const params = datastore.loadParams() || defaultParams;
+    this.state = { params };
+  }
 
   start = () => {
+    datastore.saveParams(this.state.params);
     this.props.navigate('/active');
   };
 

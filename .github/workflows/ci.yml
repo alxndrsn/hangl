@@ -22,7 +22,7 @@ jobs:
     # this magic seems to add a clickable link to the deployed site from github actions
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
     # See: https://github.com/actions/setup-node/issues/480

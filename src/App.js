@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   { path:'/',         element:<Navigate to="/settings" replace/>, errorElement:<ErrorPage/> },
   { path:'/settings', element:<SessionParamsPage/> },
   { path:'/active',   element:<SessionActivePage/> },
-]);
+], { basename:process.env.PUBLIC_URL });
 
 function App() {
   return (

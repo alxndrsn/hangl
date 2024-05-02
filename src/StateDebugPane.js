@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 
-const StateDebugPane = ({ state }) => (
+const StateDebugPane = ({ state }) => process.env.NODE_ENV === 'production' ? null : (
   <Grid item xs={12}>
     <div>
       <h3>debug - current state</h3>

@@ -51,6 +51,8 @@ class SessionActivePage extends Component {
     if(!params) params = this.state.params;
 
     return {
+      countdown: 3000,
+      nextBeep: 3000,
       'set.active':   params['set.active']   * 1000,
       'set.rest':     params['set.rest']     * 1000,
       'set.reps':     params['set.reps'],
@@ -63,7 +65,7 @@ class SessionActivePage extends Component {
     this.setState(prevState => {
       const current = this.freshCurrent();
       // TODO add countdown into the whole session as sessionState:'start-countdown' or something
-      this.setState({ current, inProgress:true, msPassed:0, sessionState:'set-active' }, this.resume);
+      this.setState({ current, inProgress:true, msPassed:0, sessionState:'countdown' }, this.resume);
     });
   };
   pause = () => {
@@ -76,7 +78,7 @@ class SessionActivePage extends Component {
   resume = () => {
     // TODO deal with partial seconds from pausing
     const resumedAt = now();
-    const ticker = setInterval(this.tick, 50);
+    const ticker = setInterval(this.tick, 10);
     this.setState(prevState => {
       if(prevState.ticker) clearInterval(prevState.ticker); // react dev mode?
       return { ticktock:true, resumedAt, ticker };
@@ -93,16 +95,29 @@ class SessionActivePage extends Component {
       let { sessionState } = prevState;
 
       switch(sessionState) {
+        case 'countdown': {
+          current.countdown -= sinceLastTick;
+          if(current.countdown <= 0) {
+            this.playBeep(2); current.nextBeep = 3000;
+            sessionState = 'set-active';
+          } else if(current.countdown < current.nextBeep) {
+            this.playBeep(1); current.nextBeep -= 1000;
+          }
+        } break;
         case 'set-active': {
           current['set.active'] -= sinceLastTick;
           if(current['set.active'] <= 0) {
+            this.playBeep(2); current.nextBeep = 3000;
             current['set.active'] = 0;
             sessionState = 'set-rest';
+          } else if(current['set.active'] < current.nextBeep) {
+            this.playBeep(1); current.nextBeep -= 1000;
           }
         } break;
         case 'set-rest': {
           current['set.rest'] -= sinceLastTick;
-          if(current['set.rest'] <=0) {
+          if(current['set.rest'] <= 0) {
+            this.playBeep(2); current.nextBeep = 3000;
             if(--current['set.reps']) {
               current['set.active'] = prevState.params['set.active'] * 1000;
               current['set.rest']   = prevState.params['set.rest'] * 1000;
@@ -111,11 +126,14 @@ class SessionActivePage extends Component {
               current['set.rest'] = 0;
               sessionState = 'session-rest';
             }
+          } else if(current['set.rest'] < current.nextBeep) {
+            this.playBeep(1); current.nextBeep -= 1000;
           }
         } break;
         case 'session-rest': {
           current['session.rest'] -= sinceLastTick;
           if(current['session.rest'] <= 0) {
+            this.playBeep(2); current.nextBeep = 3000;
             current['session.rest'] = 0;
             if(--current['session.sets']) {
               current['set.reps']     = prevState.params['set.reps'];
@@ -127,6 +145,8 @@ class SessionActivePage extends Component {
               clearInterval(this.state.ticker);
               return { current, sessionState:'completed', completed:true };
             }
+          } else if(current['session.rest'] < current.nextBeep) {
+            this.playBeep(1); current.nextBeep -= 1000;
           }
         } break;
         default: throw new Error(`TODO: no handling for sessionState: '${sessionState}'`);
@@ -147,8 +167,8 @@ class SessionActivePage extends Component {
     else                return ['Start',  this.start];
   };
 
-  playBeep = () => {
-    const audioElement = document.querySelector('audio');
+  playBeep = async n => { // async so it doesn't block - should not await
+    const audioElement = document.getElementById(`beep-${n}`);
     if(!this.beepinitialised) {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       const audioContext = new AudioContext();
@@ -167,7 +187,8 @@ class SessionActivePage extends Component {
 
     return (
       <GridContainer>
-        <audio src="/beep-1.mp3"/>
+        <audio src="/beep-1.mp3" id="beep-1"/>
+        <audio src="/beep-2.mp3" id="beep-2"/>
         <GridFullRow>
           <Fieldset label="Set">
             <GridHalfRow>

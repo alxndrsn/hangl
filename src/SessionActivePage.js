@@ -147,6 +147,18 @@ class SessionActivePage extends Component {
     else                return ['Start',  this.start];
   };
 
+  playBeep = () => {
+    const audioElement = document.querySelector('audio');
+    if(!this.beepinitialised) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      const track = audioContext.createMediaElementSource(audioElement);
+      track.connect(audioContext.destination);
+      this.beepinitialised = true;
+    }
+    audioElement.play();
+  };
+
   render() {
     const { current, sessionState, ticktock } = this.state;
 
@@ -155,6 +167,7 @@ class SessionActivePage extends Component {
 
     return (
       <GridContainer>
+        <audio src="/beep-1.mp3"/>
         <GridFullRow>
           <Fieldset label="Set">
             <GridHalfRow>

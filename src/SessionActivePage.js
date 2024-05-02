@@ -76,7 +76,7 @@ class SessionActivePage extends Component {
   resume = () => {
     // TODO deal with partial seconds from pausing
     const resumedAt = now();
-    const ticker = setInterval(this.tick, 1000);
+    const ticker = setInterval(this.tick, 50);
     this.setState(prevState => {
       if(prevState.ticker) clearInterval(prevState.ticker); // react dev mode?
       return { ticktock:true, resumedAt, ticker };
@@ -97,19 +97,18 @@ class SessionActivePage extends Component {
           current['set.active'] -= sinceLastTick;
           if(current['set.active'] <= 0) {
             current['set.active'] = 0;
-            current['set.rest'] = prevState.params['set.rest'] * 1000;
             sessionState = 'set-rest';
           }
         } break;
         case 'set-rest': {
           current['set.rest'] -= sinceLastTick;
           if(current['set.rest'] <=0) {
-            current['set.rest'] = 0;
             if(--current['set.reps']) {
               current['set.active'] = prevState.params['set.active'] * 1000;
+              current['set.rest']   = prevState.params['set.rest'] * 1000;
               sessionState = 'set-active';
             } else {
-              current['session.rest'] = prevState.params['session.rest'] * 1000;
+              current['set.rest'] = 0;
               sessionState = 'session-rest';
             }
           }
@@ -117,10 +116,12 @@ class SessionActivePage extends Component {
         case 'session-rest': {
           current['session.rest'] -= sinceLastTick;
           if(current['session.rest'] <= 0) {
-            current['session.rest'] = prevState.params['session.rest'] * 1000;
+            current['session.rest'] = 0;
             if(--current['session.sets']) {
-              current['set.reps']   = prevState.params['set.reps'];
-              current['set.active'] = prevState.params['set.active'] * 1000;
+              current['set.reps']     = prevState.params['set.reps'];
+              current['set.active']   = prevState.params['set.active'] * 1000;
+              current['set.rest']     = prevState.params['set.rest'] * 1000;
+              current['session.rest'] = prevState.params['session.rest'] * 1000;
               sessionState = 'set-active';
             } else {
               clearInterval(this.state.ticker);
@@ -193,5 +194,5 @@ class SessionActivePage extends Component {
 export default withRouter(SessionActivePage);
 
 function toS(remaining) {
-  return Math.ceil(remaining / 1000);
+  return (Math.ceil(remaining / 100) / 10).toFixed(1);
 }

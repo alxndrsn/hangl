@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   build:
+    timeout-minutes: 5
     # this magic seems to add a clickable link to the deployed site from github actions
     environment:
       name: github-pages

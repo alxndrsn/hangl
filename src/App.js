@@ -12,7 +12,12 @@ const ErrorPage = () => {
   return (
     <div>
       <h1>Error</h1>
-      <pre><code>{error}</code></pre>
+      <h2>Message</h2>
+      <p>{error?.message}</p>
+      <h2>Stack</h2>
+      <pre><code>{error?.stack}</code></pre>
+      <h2>toString()</h2>
+      <pre><code>{error?.toString()}</code></pre>
     </div>
   );
 };

@@ -186,8 +186,6 @@ class SessionActivePage extends Component {
 
     return (
       <GridContainer>
-        <audio src="/beep-1.mp3" id="beep-1"/>
-        <audio src="/beep-2.mp3" id="beep-2"/>
         <GridFullRow>
           <Fieldset label="Set">
             <GridHalfRow>

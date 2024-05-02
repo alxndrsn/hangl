@@ -39,8 +39,6 @@ export default class NumberInput extends Component {
     const { label, unit } = this.props;
     const { value } = this.state;
 
-    console.log('NumberInput.render()', value);
-
     return (
       <TextField
         label={label}

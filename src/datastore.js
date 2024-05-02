@@ -4,7 +4,7 @@ const loadParams = () => {
   try {
     return JSON.parse(localStorage.getItem(KEY_PARAMS));
   } catch(err) {
-    console.log('datastore.loadParams()', 'caught error:', err);
+    console.error('datastore.loadParams()', 'caught error:', err);
   }
 };
 

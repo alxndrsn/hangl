@@ -31,7 +31,6 @@ class SessionParamsPage extends Component {
   };
 
   setParam = name => v => {
-    console.log('setParam()', name, v);
     this.setState(prevState => {
       const prevParams = prevState.params;
       return {

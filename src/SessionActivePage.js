@@ -85,7 +85,6 @@ class SessionActivePage extends Component {
     });
   };
   tick = () => {
-    console.log(now(), 'tick()');
     this.setState(prevState => {
       const rightNow = now();
       const sinceLastTick = rightNow - prevState.resumedAt;

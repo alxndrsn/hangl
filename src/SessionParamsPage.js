@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 
 import NumberInput from './NumberInput';
 import SecondsInput from './SecondsInput';
+import withRouter from './withRouter';
 
 const Fieldset = ({ children, label, ...props }) => (
   <fieldset {...props}>
@@ -15,7 +16,7 @@ const Fieldset = ({ children, label, ...props }) => (
 
 const ActionButton = ({ label, ...props }) => <Button variant="contained" {...props}>{label}</Button>;
 
-export default class SessionParamsPage extends Component {
+class SessionParamsPage extends Component {
   state = {
     params: {
       'set.active':    12,
@@ -27,7 +28,7 @@ export default class SessionParamsPage extends Component {
   };
 
   start = () => {
-    this.props.setActivity('active');
+    this.props.navigate('/active');
   };
 
   setParam = name => v => {
@@ -66,3 +67,5 @@ export default class SessionParamsPage extends Component {
     );
   }
 }
+
+export default withRouter(SessionParamsPage);

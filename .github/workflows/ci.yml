@@ -37,7 +37,7 @@ jobs:
     - run: yarn lint
     - run: PUBLIC_URL=/hangl yarn build
     - name: GitHub Pages Single-page App Support
-      run: grep -Eo "path:'/[^']*/'" src/App.js | cut -d/ -f2 | xargs -I{} bash -c 'mkdir ./build/{} && cp ./build/index.html ./build/{}/'
+      run: grep -Eo "path:'/[^']*/'" src/App.js | cut -d/ -f2 | xargs -I{} bash -cx 'mkdir ./build/{} && cp ./build/index.html ./build/{}/'
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Upload artifact

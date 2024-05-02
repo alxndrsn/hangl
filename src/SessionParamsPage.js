@@ -1,7 +1,6 @@
 import { Component } from 'react';
 
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 
 import NumberInput from './NumberInput';
 import SecondsInput from './SecondsInput';
@@ -50,7 +49,7 @@ class SessionParamsPage extends Component {
 
   render() {
     return (
-      <Container maxWidth="sm">
+      <>
         <Fieldset label="Each Set">
           <SecondsInput label="Active" value={this.state.params['set.active']} onChange={this.setParam('set.active')}/>
           <SecondsInput label="Rest"   value={this.state.params['set.rest']}   onChange={this.setParam('set.rest')}/>
@@ -70,7 +69,7 @@ class SessionParamsPage extends Component {
             </code>
           </pre>
         </div>
-      </Container>
+      </>
     );
   }
 }

@@ -1,5 +1,6 @@
 import { createBrowserRouter, useRouteError, Navigate, RouterProvider } from 'react-router-dom';
 
+import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import SessionActivePage from './SessionActivePage';
@@ -26,7 +27,9 @@ function App() {
   return (
     <>
       <CssBaseline/>
-      <RouterProvider router={router}/>
+      <Container maxWidth="sm">
+        <RouterProvider router={router}/>
+      </Container>
     </>
   );
 }
